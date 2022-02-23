@@ -58,7 +58,11 @@
       });
 
       it('should accept an index argument', function() {
+<<<<<<< HEAD
         expect(_.last([1, 2, 3], 2)).to.eql(3);
+=======
+        expect(_.last([1, 2, 3], 2)).to.eql([2, 3]);
+>>>>>>> d844f519bb418542c6f72bdc9946911d6c566d53
       });
 
       it('should return empty array if zero is passed in as the index', function() {
@@ -126,7 +130,7 @@
           iterations.push([letter, index]);
         });
 
-        expect(iterations).to.eql(FILL_ME_IN);
+        expect(iterations).to.eql([['a', 0], ['b', 1], ['c', 2]]);
       });
 
       it('should iterate over arrays and provide access to the original collection', function() {
@@ -153,7 +157,7 @@
           iterations.push(letter);
         });
 
-        expect(iterations).to.not.include(FILL_ME_IN);
+        expect(iterations).to.not.include('Do not iterate over me!');
       });
 
       it('should iterate over objects and provide access to each value', function() {
