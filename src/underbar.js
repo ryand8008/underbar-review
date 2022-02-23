@@ -90,16 +90,50 @@
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
+    var result = [];
+    for (let i = 0; i < collection.length; i++) {
+      if (test(collection[i])) {
+        result.push(collection[i]);
+      }
+    }
+    return result;
   };
 
   // Return all elements of an array that don't pass a truth test.
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
+    var result = [];
+    for (let i = 0; i < collection.length; i++) {
+      if (!test(collection[i])) {
+        result.push(collection[i]);
+      }
+    }
+    return result;
   };
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
+    var result = [];
+    var isUnique = {};
+    if (isSorted === undefined) {
+      for (let i = 0; i < array.length; i++ ) {
+        if (isUnique[array[i]] === undefined ) {
+          isUnique[array[i]] = false;
+          result.push(array[i]);
+        }
+      }
+    } else if (isSorted) {
+      for (let i = 0; i < array.length; i++ ) {
+        if (iterator(isUnique[array[i]]) === undefined ) {
+          isUnique[iterator(array[i])] = false;
+          result.push(array[i]);
+        }
+      }
+    } else {
+
+    }
+    return result;
   };
 
 
@@ -108,6 +142,13 @@
     // map() is a useful primitive iteration function that works a lot
     // like each(), but in addition to running the operation on all
     // the members, it also maintains an array of results.
+    var result = [];
+
+    for ( let i = 0; i < collection.length; i++ ) {
+      result.push(iterator(collection[i]));
+    }
+
+    return result;
   };
 
   /*
@@ -149,6 +190,14 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
+    if (Array.isArray(collection)) {
+      accumulator = accumulator || collection[0];
+      for ( let i = 0; i < collection.length; i++) {
+        iterator(accumulator, collection[i]);
+      }
+
+    }
+    return accumulator;
   };
 
   // Determine if the array or object contains a given value (using `===`).
