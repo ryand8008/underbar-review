@@ -96,7 +96,7 @@
         // Replace this line with an `expect` statement that tests
         // the behavior described by the `it` string
         //throw new Error('This test is missing.');
-        expect(_.every([true, {}, 1], _.identity)).to.be.false;
+        expect(_.every([false, {}, 1], _.identity)).to.be.false;
       });
 
       it('fails for a collection containing mixed falsy and truthy values', function() {
