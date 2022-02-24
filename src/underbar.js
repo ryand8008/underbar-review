@@ -112,22 +112,20 @@
   _.uniq = function(array, isSorted, iterator) {
     var result = [];
     var isUnique = {};
-    if (isSorted === undefined) {
+    if (iterator === undefined) {
       for (let i = 0; i < array.length; i++ ) {
         if (isUnique[array[i]] === undefined ) {
           isUnique[array[i]] = false;
           result.push(array[i]);
         }
       }
-    } else if (isSorted) {
+    } else {
       for (let i = 0; i < array.length; i++ ) {
-        if (iterator(isUnique[array[i]]) === undefined ) {
+        if (isUnique[iterator([array[i]])] === undefined ) {
           isUnique[iterator(array[i])] = false;
           result.push(array[i]);
         }
       }
-    } else {
-
     }
     return result;
   };
@@ -186,13 +184,14 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
-    if (Array.isArray(collection)) {
-      accumulator = accumulator || collection[0];
-      for ( let i = 0; i < collection.length; i++) {
-        iterator(accumulator, collection[i]);
-      }
-
+    if (accumulator === undefined) {
+      accumulator = collection[0];
+      collection = collection.slice(1);
     }
+
+    _.each(collection, function(item) {
+      accumulator = iterator(accumulator, item);
+    });
     return accumulator;
   };
 
@@ -212,12 +211,16 @@
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
+    return _.reduce(collection, function (value) {
+      return iterator(value);
+    }, true);
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+
   };
 
 
